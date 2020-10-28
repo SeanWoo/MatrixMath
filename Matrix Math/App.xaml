@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:Matrix_Math"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             StartupUri="MainWindow.xaml">
+             StartupUri="Views/Main.xaml">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -14,14 +14,14 @@
                 </ResourceDictionary>
                 <!-- primary color -->
                 <ResourceDictionary>
-                    <SolidColorBrush x:Key="PrimaryHueLightBrush" Color="#FF735184"/>
-                    <SolidColorBrush x:Key="PrimaryHueMidBrush" Color="#FF735184"/>
-                    <SolidColorBrush x:Key="PrimaryHueDarkBrush" Color="#FF462757"/>
+                    <SolidColorBrush x:Key="PrimaryHueLightBrush" Color="#FFCCBB44"/>
+                    <SolidColorBrush x:Key="PrimaryHueMidBrush" Color="#FFBB9922"/>
+                    <SolidColorBrush x:Key="PrimaryHueDarkBrush" Color="#FFAA7700"/>
                 </ResourceDictionary>
 
                 <!-- secondary colour -->
                 <ResourceDictionary>
-                    <SolidColorBrush x:Key="SecondaryAccentBrush" Color="#b65a62"/>
+                    <SolidColorBrush x:Key="SecondaryAccentBrush" Color="#AABB00"/>
                     <SolidColorBrush x:Key="SecondaryAccentForegroundBrush" Color="#FFFFFF"/>
                 </ResourceDictionary>
 
