@@ -19,76 +19,34 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition Height="91"/>
-                </Grid.RowDefinitions>
                 <StackPanel>
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="4*"/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
-                        <TextBox materialDesign:HintAssist.Hint="Выберите файл с матрицей" Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
-                        <Button Grid.Column="1" Content="Открыть файл" Height="45" Margin="5,0,0,0"/>
+                        <TextBox materialDesign:HintAssist.Hint="Выберите первый файл с матрицей" Text="{Binding FirstFile, Mode=OneWay}" IsReadOnly="True" Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
+                        <Button Command="{Binding OpenFirstFileCommand}" Grid.Column="1" Content="Открыть файл" Height="45" Margin="5,0,0,0"/>
                     </Grid>
-                    <TextBox materialDesign:HintAssist.Hint="Введите имя выходного файла" Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
-                    <Label Content="Ввод матрицы вручную: " FontSize="18" FontFamily="Segoe UI Semibold"/>
-                    <StackPanel Orientation="Horizontal">
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                            <Label Content="Размер по X: " Foreground="#999" FontSize="14" VerticalAlignment="Center" FontFamily="Segoe UI Semibold"/>
-                            <ComboBox x:Name="SizeX" materialDesign:HintAssist.Hint="Ввод" MinWidth="72" IsEditable="True" ItemsSource="{Binding Numbers}">
-                                <ComboBox.Text>
-                                    <Binding Path="SelectedNumberX" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
-                                        <Binding.ValidationRules>
-                                            <domain1:EmptyRule ValidatesOnTargetUpdated="True" xmlns:domain1="clr-namespace:Matrix_Math.Models.Rules" />
-                                        </Binding.ValidationRules>
-                                    </Binding>
-                                </ComboBox.Text>
-                                <ComboBox.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <VirtualizingStackPanel />
-                                    </ItemsPanelTemplate>
-                                </ComboBox.ItemsPanel>
-                            </ComboBox>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="50, 0, 0, 0">
-                            <Label Content="Размер по Y: " Foreground="#999" FontSize="14"  VerticalAlignment="Center"  FontFamily="Segoe UI Semibold"/>
-                            <ComboBox x:Name="SizeY" materialDesign:HintAssist.Hint="Ввод" MinWidth="72" IsEditable="True" ItemsSource="{Binding Numbers}">
-                                <ComboBox.Text>
-                                    <Binding Path="SelectedNumberY" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
-                                        <Binding.ValidationRules>
-                                            <domain1:EmptyRule ValidatesOnTargetUpdated="True" xmlns:domain1="clr-namespace:Matrix_Math.Models.Rules" />
-                                        </Binding.ValidationRules>
-                                    </Binding>
-                                </ComboBox.Text>
-                                <ComboBox.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <VirtualizingStackPanel />
-                                    </ItemsPanelTemplate>
-                                </ComboBox.ItemsPanel>
-                            </ComboBox>
-                        </StackPanel>
-                    </StackPanel>
-                    <DataGrid ItemsSource="{Binding Matrix}" Background="#10FFFFFF" HeadersVisibility="None" CanUserAddRows="False" CanUserDeleteRows="False" Margin="0, 30, 0, 0"/>
-                </StackPanel>
-                <StackPanel Grid.Row="1" Orientation="Horizontal" Background="#20FFFFFF" Margin="5, 0, 0, 0">
-                    <ListBox ItemsSource="{Binding MatrixFrames}">
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <WrapPanel />
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Background="#20000000">
-                                    <Label Content="{Binding Name}"/>
-                                    <Label Content="{Binding Matrix.SizeX}" Foreground="#990000" ContentStringFormat="SizeX: {0}"/>
-                                    <Label Content="{Binding Matrix.SizeY}" Foreground="#009900" ContentStringFormat="SizeY: {0}"/>
-                                </StackPanel>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ListBox>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="4*"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <TextBox materialDesign:HintAssist.Hint="Выберите второй файл с матрицей" Text="{Binding SecondFile, Mode=OneWay}" IsReadOnly="True" Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
+                        <Button Command="{Binding OpenSecondFileCommand}" Grid.Column="1" Content="Открыть файл" Height="45" Margin="5,0,0,0"/>
+                    </Grid>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="4*"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <TextBox materialDesign:HintAssist.Hint="Введите имя выходного файла (необязательно)" Text="{Binding ResultFile, Mode=OneWay}" IsReadOnly="True" Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
+                        <Button Command="{Binding SelectResultFileCommand}" Grid.Column="1" Content="Выбрать файл" Height="45" Margin="5,0,0,0"/>
+                    </Grid>
+                    <TextBox materialDesign:HintAssist.Hint="Введите число (необязательно)" Text="{Binding Number, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
+                    <Label Content="Результат: " FontSize="18" FontFamily="Segoe UI Semibold"/>
+                    <DataGrid ItemsSource="{Binding ResultMatrix}" SelectedItem="{Binding it}" Background="#10FFFFFF" HeadersVisibility="None" CanUserAddRows="False" CanUserDeleteRows="False" Margin="0, 30, 0, 0"/>
                 </StackPanel>
             </Grid>
             <Grid Grid.Column="1" Margin="5, 0, 0, 0">
@@ -101,7 +59,14 @@
                         <Grid Background="{StaticResource SecondaryAccentBrush}">
                             <Label FontWeight="Bold" Content="Режимы" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="16"/>
                         </Grid>
-                        <ListBox Grid.Row="1" Style="{StaticResource MaterialDesignCardsListBox}">
+                        <ListBox Grid.Row="1" SelectedItem="{Binding SelectedMatrixCommand}" ItemsSource="{Binding MatrixCommands}" Style="{StaticResource MaterialDesignCardsListBox}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Label Content="{Binding Description}"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
                             <ListBox.ItemContainerStyle>
                                 <Style TargetType="ListBoxItem" BasedOn="{StaticResource MaterialDesignListBoxItem}">
                                     <Style.Triggers>

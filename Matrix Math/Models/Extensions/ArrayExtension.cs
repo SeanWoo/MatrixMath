@@ -22,5 +22,28 @@ namespace Matrix_Math.Models.Extensions
 
             return res;
         }
+        public static double[,] ArraySub(this double[,] arr, int lx, int ly)
+        {
+            int size = arr.GetLength(0);
+            double[,] result = new double[size - 1, size - 1];
+            int realX = 0;
+            int realY = 0;
+            for (int x = 0; x < size; x++)
+            {
+                if (x == lx) continue;
+                realY = 0;
+                for (int y = 0; y < size; y++)
+                {
+                    if (y == ly) continue;
+
+                    result[realX, realY] = arr[x, y];
+
+                    realY++;
+                }
+                realX++;
+            }
+
+            return result;
+        }
     }
 }
