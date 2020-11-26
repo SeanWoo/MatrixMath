@@ -12,6 +12,7 @@ using System.Runtime.CompilerServices;
 using Microsoft.Win32;
 using Microsoft.VisualBasic.FileIO;
 using System.Windows;
+using Matrix_Math.Models.Exceptions;
 
 namespace Matrix_Math.AppViewModels
 {
@@ -50,8 +51,8 @@ namespace Matrix_Math.AppViewModels
             new MatrixCommand("Умножить первую на вторую матрицу", (a, b, c) => a * b),
             new MatrixCommand("Умножить вторую на первую матрицу", (a, b, c) => b * a),
             new MatrixCommand("Умножить матрицу на число", (a, b, c) => a * Convert.ToDouble(c)),
-            new MatrixCommand("Определитель первой матрицы", (a, b, c) => new Matrix(1, 1, a.Determinant())),
-            new MatrixCommand("Определитель второй матрицы", (a, b, c) => new Matrix(1, 1, b.Determinant())),
+            new MatrixCommand("Определитель первой матрицы", (a, b, c) => a.Determinant()),
+            new MatrixCommand("Определитель второй матрицы", (a, b, c) => b.Determinant()),
         };
 
         public MatrixCommand SelectedMatrixCommand { 
@@ -59,9 +60,24 @@ namespace Matrix_Math.AppViewModels
             set 
             {
                 _selectedMatrixCommand = value;
-                _resultMatrix = _selectedMatrixCommand.Execute(_firstMatrix, _secondMatrix, Number);
-                OnPropertyChanged("ResultMatrix");
+                try
+                {
+                    var resultMatrix = _selectedMatrixCommand.Execute(
+                        _firstMatrix ?? new Matrix(),
+                        _secondMatrix ?? new Matrix(),
+                        Number);
 
+                    if(resultMatrix is double)
+                        _resultMatrix = new Matrix(1, 1, (double)resultMatrix);
+                    else if(resultMatrix is Matrix)
+                        _resultMatrix = resultMatrix as Matrix;
+
+                    OnPropertyChanged("ResultMatrix");
+                }
+                catch(MatrixException ex) 
+                {
+                    MessageBox.Show(ex.Message);
+                }
                 if (!string.IsNullOrWhiteSpace(ResultFile))
                 {
                     var fs = File.Create(ResultFile);
@@ -82,7 +98,6 @@ namespace Matrix_Math.AppViewModels
                         }
                     }
                 }
-                _selectedMatrixCommand = null;
             } 
         }
 

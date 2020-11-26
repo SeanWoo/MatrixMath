@@ -8,9 +8,9 @@ namespace Matrix_Math.Models
     public class MatrixCommand
     {
         public string Description { get; set; }
-        public Func<Matrix, Matrix, object, Matrix> Execute { get; set; }
+        public Func<Matrix, Matrix, object, object> Execute { get; set; }
 
-        public MatrixCommand(string description, Func<Matrix, Matrix, object, Matrix> execute)
+        public MatrixCommand(string description, Func<Matrix, Matrix, object, object> execute)
         {
             Description = description;
             Execute = execute;

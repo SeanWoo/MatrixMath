@@ -1,4 +1,5 @@
-﻿using Matrix_Math.Models.Extensions;
+﻿using Matrix_Math.Models.Exceptions;
+using Matrix_Math.Models.Extensions;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -79,8 +80,8 @@ namespace Matrix_Math.Models
         public static Matrix operator +(Matrix a, Matrix b)
         {
             if (a.SizeX != b.SizeX || a.SizeY != b.SizeY)
-                return null;
-            
+                throw new MatrixException("Вы не можете сложить матрицы разных размеров");
+
             Matrix resultMatrix = new Matrix(a.SizeX, a.SizeY);
             for (int x = 0; x < resultMatrix.SizeX; x++)
             {
@@ -94,7 +95,7 @@ namespace Matrix_Math.Models
         public static Matrix operator -(Matrix a, Matrix b)
         {
             if (a.SizeX != b.SizeX || a.SizeY != b.SizeY)
-                return null;
+                throw new MatrixException("Вы не можете вычесть матрицы разных размеров");
 
             Matrix resultMatrix = new Matrix(a.SizeX, a.SizeY);
             for (int x = 0; x < resultMatrix.SizeX; x++)
@@ -109,7 +110,7 @@ namespace Matrix_Math.Models
         public static Matrix operator *(Matrix a, Matrix b)
         {
             if (a.SizeY != b.SizeX)
-                return null;
+                throw new MatrixException("Вы не можете умножить матрицы если количество столбцов первой матрицы не равно количеству столбцов второй матрицы");
 
             Matrix resultMatrix = new Matrix(a.SizeX, b.SizeY);
             for (int i = 0; i < resultMatrix.SizeX; i++)
@@ -130,7 +131,7 @@ namespace Matrix_Math.Models
         public double Determinant()
         {
             if (SizeX != SizeY)
-                throw new ArithmeticException("Matrices are not compatible");
+                throw new MatrixException("Вы не можете высчитать определитель не квадратной матрицы");
 
             return DeterminantRecursive(_data);
         }
