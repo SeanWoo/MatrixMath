@@ -108,7 +108,7 @@ namespace Matrix_Math.Models
         }
         public static Matrix operator *(Matrix a, Matrix b)
         {
-            if (a.SizeX != b.SizeY)
+            if (a.SizeY != b.SizeX)
                 return null;
 
             Matrix resultMatrix = new Matrix(a.SizeX, b.SizeY);
