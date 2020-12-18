@@ -12,9 +12,9 @@ namespace Matrix_Test
 
         public Matrix3x3()
         {
-            a[0, 0] = 1; a[0, 1] = 2; a[0, 2] = 3;
-            a[1, 0] = 4; a[1, 1] = 5; a[1, 2] = 6;
-            a[2, 0] = 7; a[2, 1] = 8; a[2, 2] = 9;
+            a[0, 0] = 1; a[0, 1] = -2; a[0, 2] = 3;
+            a[1, 0] = 0; a[1, 1] = 4; a[1, 2] = -1;
+            a[2, 0] = 5; a[2, 1] = 0; a[2, 2] = 0;
 
             b[0, 0] = 1; b[0, 1] = 2; b[0, 2] = 3;
             b[1, 0] = 4; b[1, 1] = 5; b[1, 2] = 6;
@@ -27,10 +27,9 @@ namespace Matrix_Test
             var result = a + b;
 
             var e = new Matrix(3, 3);
-            e[0, 0] = 2; e[0, 1] = 4; e[0, 2] = 6;
-            e[1, 0] = 8; e[1, 1] = 10; e[1, 2] = 12;
-            e[2, 0] = 14; e[2, 1] = 16; e[2, 2] = 18;
-
+            for (int x = 0; x < e.SizeX; x++)
+                for (int y = 0; y < e.SizeY; y++)
+                    e[x, y] = a[x, y] + b[x, y];
 
             Assert.Equal(e, result);
         }
@@ -40,9 +39,9 @@ namespace Matrix_Test
             var result = a - b;
 
             var e = new Matrix(3, 3);
-            e[0, 0] = 0; e[0, 1] = 0; e[0, 2] = 0;
-            e[1, 0] = 0; e[1, 1] = 0; e[1, 2] = 0;
-            e[2, 0] = 0; e[2, 1] = 0; e[2, 2] = 0;
+            for (int x = 0; x < e.SizeX; x++)
+                for (int y = 0; y < e.SizeY; y++)
+                    e[x, y] = a[x, y] - b[x, y];
 
             Assert.Equal(e, result);
         }
@@ -52,9 +51,9 @@ namespace Matrix_Test
             var result = a * b;
 
             var e = new Matrix(3, 3);
-            e[0, 0] = 30; e[0, 1] = 36; e[0, 2] = 42;
-            e[1, 0] = 66; e[1, 1] = 81; e[1, 2] = 96;
-            e[2, 0] = 102; e[2, 1] = 126; e[2, 2] = 150;
+            e[0, 0] = 48; e[0, 1] = 57; e[0, 2] = 66;
+            e[1, 0] = 32; e[1, 1] = 40; e[1, 2] = 48;
+            e[2, 0] = 31; e[2, 1] = 41; e[2, 2] = 51;
 
             Assert.Equal(e, result);
         }
@@ -65,9 +64,9 @@ namespace Matrix_Test
             var result = a + number;
 
             var e = new Matrix(3, 3);
-            e[0, 0] = a[0, 0] + number; e[0, 1] = a[0, 1] + number; e[0, 2] = a[0, 2] + number;
-            e[1, 0] = a[1, 0] + number; e[1, 1] = a[1, 1] + number; e[1, 2] = a[1, 2] + number;
-            e[2, 0] = a[2, 0] + number; e[2, 1] = a[2, 1] + number; e[2, 2] = a[2, 2] + number;
+            for (int x = 0; x < e.SizeX; x++)
+                for (int y = 0; y < e.SizeY; y++)
+                    e[x, y] = a[x, y] + number;
 
             Assert.Equal(e, result);
         }
@@ -78,9 +77,9 @@ namespace Matrix_Test
             var result = a - number;
 
             var e = new Matrix(3, 3);
-            e[0, 0] = a[0, 0] - number; e[0, 1] = a[0, 1] - number; e[0, 2] = a[0, 2] - number;
-            e[1, 0] = a[1, 0] - number; e[1, 1] = a[1, 1] - number; e[1, 2] = a[1, 2] - number;
-            e[2, 0] = a[2, 0] - number; e[2, 1] = a[2, 1] - number; e[2, 2] = a[2, 2] - number;
+            for (int x = 0; x < e.SizeX; x++)
+                for (int y = 0; y < e.SizeY; y++)
+                    e[x, y] = a[x, y] - number;
 
             Assert.Equal(e, result);
         }
@@ -91,16 +90,40 @@ namespace Matrix_Test
             var result = a * number;
 
             var e = new Matrix(3, 3);
-            e[0, 0] = a[0, 0] * number; e[0, 1] = a[0, 1] * number; e[0, 2] = a[0, 2] * number;
-            e[1, 0] = a[1, 0] * number; e[1, 1] = a[1, 1] * number; e[1, 2] = a[1, 2] * number;
-            e[2, 0] = a[2, 0] * number; e[2, 1] = a[2, 1] * number; e[2, 2] = a[2, 2] * number;
+            for (int x = 0; x < e.SizeX; x++)
+                for (int y = 0; y < e.SizeY; y++)
+                    e[x, y] = a[x, y] * number;
+
+            Assert.Equal(e, result);
+        }
+        [Fact]
+        public void Transpose()
+        {
+            var result = b.Transpose();
+
+            var e = new Matrix(3, 3);
+            e[0, 0] = 1; e[0, 1] = 4; e[0, 2] = 7;
+            e[1, 0] = 2; e[1, 1] = 5; e[1, 2] = 8;
+            e[2, 0] = 3; e[2, 1] = 6; e[2, 2] = 9;
+
+            Assert.Equal(e, result);
+        }
+        [Fact]
+        public void InverseMatrix()
+        {
+            var result = a.InverseMatrix();
+
+            var e = new Matrix(3, 3);
+            e[0, 0] = 0; e[0, 1] = 0; e[0, 2] = 0.2;
+            e[1, 0] = 0.1; e[1, 1] = 0.3; e[1, 2] = -0.02;
+            e[2, 0] = 0.4; e[2, 1] = 0.2; e[2, 2] = -0.08;
 
             Assert.Equal(e, result);
         }
         [Fact]
         public void Determinant()
         {
-            var result = a.Determinant();
+            var result = b.Determinant();
 
             Assert.Equal(0.0, result);
         }

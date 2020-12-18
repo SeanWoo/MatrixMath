@@ -83,5 +83,6 @@
                 </Border>
             </Grid>
         </Grid>
+        <Label Content="© Kokarev Vadim (SeanWoo), 2020" HorizontalAlignment="Right" VerticalAlignment="Bottom" FontSize="8" Opacity="0.5"/>
     </Grid>
 </Window>

@@ -31,6 +31,15 @@ namespace Matrix_Math.Models
                 for (int y = 0; y < sizeY; y++)
                     _data[x, y] = defaultValue;
         }
+        public Matrix(double[,] matrix)
+        {
+            SizeX = matrix.GetLength(0);
+            SizeY = matrix.GetLength(1);
+            _data = new double[SizeX, SizeY];
+            for (int x = 0; x < SizeX; x++)
+                for (int y = 0; y < SizeY; y++)
+                    _data[x, y] = matrix[x, y];
+        }
 
         public double this[int x, int y]
         {
@@ -134,6 +143,37 @@ namespace Matrix_Math.Models
                 throw new MatrixException("Вы не можете высчитать определитель не квадратной матрицы");
 
             return DeterminantRecursive(_data);
+        }
+        public Matrix Transpose()
+        {
+            var resultMatrix = new Matrix(SizeY, SizeX);
+            for (int x = 0; x < SizeX; x++)
+            {
+                for (int y = 0; y < SizeY; y++)
+                {
+                    resultMatrix[y, x] = _data[x, y];
+                }
+            }
+            return resultMatrix;
+        }
+        public Matrix InverseMatrix()
+        {
+            var resultMatrix = new Matrix(SizeX, SizeY);
+            var detetminant = Determinant();
+            var complements = new double[SizeX, SizeY];
+
+            var transposeMatrix = Transpose()._data;
+            double[,] subMatrix;
+
+            for (int x = 0; x < SizeX; x++)
+            {
+                for (int y = 0; y < SizeY; y++)
+                {
+                    subMatrix = transposeMatrix.ArraySub(x, y);
+                    resultMatrix[x, y] = (Math.Pow(-1, (x+1) + (y+1)) * new Matrix(subMatrix).Determinant()) / detetminant;
+                }
+            }
+            return resultMatrix;
         }
 
         public void Round(int decimals)

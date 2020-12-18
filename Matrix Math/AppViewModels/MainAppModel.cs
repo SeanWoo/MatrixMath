@@ -53,6 +53,10 @@ namespace Matrix_Math.AppViewModels
             new MatrixCommand("Умножить матрицу на число", (a, b, c) => a * Convert.ToDouble(c)),
             new MatrixCommand("Определитель первой матрицы", (a, b, c) => a.Determinant()),
             new MatrixCommand("Определитель второй матрицы", (a, b, c) => b.Determinant()),
+            new MatrixCommand("Обратная первая матрица", (a, b, c) => a.InverseMatrix()),
+            new MatrixCommand("Обратная вторая матрица", (a, b, c) => b.InverseMatrix()),
+            new MatrixCommand("Транспонирование первой матрицы", (a, b, c) => a.Transpose()),
+            new MatrixCommand("Транспонирование второй матрицы", (a, b, c) => b.Transpose()),
         };
 
         public MatrixCommand SelectedMatrixCommand { 
@@ -157,8 +161,16 @@ namespace Matrix_Math.AppViewModels
                 var list = new List<double[]>();
                 while (!parser.EndOfData)
                 {
-                    var fields = parser.ReadFields().Select(x => Convert.ToDouble(x)).ToArray();
-                    list.Add(fields);
+                    try
+                    {
+                        var fields = parser.ReadFields().Select(x => Convert.ToDouble(x)).ToArray();
+                        list.Add(fields);
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Не корректное содержимое файла. Возможно у Вас запятые в конце строк");
+                        return null;
+                    }
                 }
                 matrix = new Matrix(list.Count, list[0].Length);
                 for (int i = 0; i < list.Count; i++)

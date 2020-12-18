@@ -29,5 +29,28 @@ namespace Matrix_Test
 
             Assert.Equal(e, result);
         }
+        [Fact]
+        public void Transpose()
+        {
+            var result = a.Transpose();
+
+            var e = new Matrix(2, 3);
+            e[0, 0] = 1; e[0, 1] = 3; e[0, 2] = 5;
+            e[1, 0] = 2; e[1, 1] = 4; e[1, 2] = 6;
+
+            Assert.Equal(e, result);
+        }
+        [Fact]
+        public void InverseMatrix()
+        {
+            var result = a.InverseMatrix();
+
+            var e = new Matrix(3, 3);
+            e[0, 0] = 0; e[0, 1] = 0; e[0, 2] = 0.2;
+            e[1, 0] = 0.1; e[1, 1] = 0.3; e[1, 2] = -0.02;
+            e[2, 0] = 0.4; e[2, 1] = 0.2; e[2, 2] = -0.08;
+
+            Assert.Equal(e, result);
+        }
     }
 }
